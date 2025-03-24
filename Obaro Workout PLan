@@ -1,0 +1,50 @@
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
+
+const checklistItems = [
+  "Strength Train: 3x/week",
+  "Brisk Walks: 4x/week",
+  "Core Work: 2x/week",
+  "Plank Holds: 2x/week",
+  "Stretch/Yoga: 1–2x/week",
+  "Sleep: 7–8 hrs/night",
+  "Hydration: 2+ liters water/day",
+  "Steps: 8,000–10,000/day"
+];
+
+export default function ObaroWorkoutApp() {
+  const [checkedItems, setCheckedItems] = useState(Array(checklistItems.length).fill(false));
+
+  const toggleCheck = (index) => {
+    const newChecked = [...checkedItems];
+    newChecked[index] = !newChecked[index];
+    setCheckedItems(newChecked);
+  };
+
+  const resetChecklist = () => {
+    setCheckedItems(Array(checklistItems.length).fill(false));
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-100 p-4">
+      <h1 className="text-xl font-bold text-center mb-4">Obaro's Weekly Workout Checklist</h1>
+      <div className="grid gap-4">
+        {checklistItems.map((item, index) => (
+          <Card key={index} className="flex items-center p-3">
+            <Checkbox
+              checked={checkedItems[index]}
+              onCheckedChange={() => toggleCheck(index)}
+              className="mr-3"
+            />
+            <CardContent className="p-0 text-base">{item}</CardContent>
+          </Card>
+        ))}
+        <Button onClick={resetChecklist} className="mt-4 w-full">
+          Reset Checklist
+        </Button>
+      </div>
+    </div>
+  );
+}
